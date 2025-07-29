@@ -6,7 +6,7 @@ import {
   NavbarItem,
   NavbarMenuToggle,
   NavbarMenu,
-  NavbarMenuItem,
+  // NavbarMenuItem,
 } from "@heroui/navbar";
 import { link as linkStyles } from "@heroui/theme";
 import clsx from "clsx";
@@ -15,8 +15,12 @@ import { siteConfig } from "@/config/site";
 import { ThemeSwitch } from "@/components/theme-switch";
 import { GithubIcon } from "@/components/icons";
 import { Logo } from "@/components/icons";
+import { LogoutButton } from "./logout";
+import { useAuthStore } from "@/store/auth.store";
 
 export const Navbar = () => {
+    const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+    console.log("isAuthenticated:", isAuthenticated);
   return (
     <HeroUINavbar maxWidth="xl" position="sticky">
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
@@ -25,6 +29,7 @@ export const Navbar = () => {
             className="flex justify-start items-center gap-1"
             color="foreground"
             href="/"
+            isExternal={false}
           >
             <Logo />
             <p className="font-bold text-inherit">PE-04</p>
@@ -54,6 +59,7 @@ export const Navbar = () => {
       >
         <NavbarItem className="hidden sm:flex gap-2">
           <ThemeSwitch />
+          {isAuthenticated && <LogoutButton />}
         </NavbarItem>
       </NavbarContent>
 
@@ -66,7 +72,7 @@ export const Navbar = () => {
       </NavbarContent>
 
       <NavbarMenu>
-        <div className="mx-4 mt-2 flex flex-col gap-2">
+        {/* <div className="mx-4 mt-2 flex flex-col gap-2">
           {siteConfig.navMenuItems.map((item, index) => (
             <NavbarMenuItem key={`${item}-${index}`}>
               <Link
@@ -84,7 +90,7 @@ export const Navbar = () => {
               </Link>
             </NavbarMenuItem>
           ))}
-        </div>
+        </div> */}
       </NavbarMenu>
     </HeroUINavbar>
   );
